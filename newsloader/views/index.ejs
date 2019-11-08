@@ -24,7 +24,7 @@
       >
         <h4>
           Found <span data-bind="text: searchResult().count"> </span> records,
-          saved to <span data-bind="text: searchResult().location"></span>
+          saved to <span data-bind="text: searchResult().file"></span>
         </h4>
       </div>
     </div>
@@ -42,10 +42,12 @@
               'searching for news with keyword ' +
                 encodeURIComponent($('[name="search-field"]').val())
             );
-            $.get(
-              '/news/search?keyword=' +
+            $.ajax({
+              type: 'GET',
+              url:
+                'http://localhost:3000/news/search?keyword=' +
                 encodeURIComponent($('[name="search-field"]').val())
-            ).done(data => {
+            }).done(data => {
               console.log(data);
               koVM.searchResult(data);
             });
