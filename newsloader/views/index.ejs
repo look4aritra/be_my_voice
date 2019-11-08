@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include partials/head %>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row"><h2><%= title %></h2></div>
+      <!-- Search form -->
+      <div class="row active-cyan-3 active-cyan-4 mb-4">
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Search"
+          aria-label="Search"
+          name="search-field"
+        />
+      </div>
+      <div
+        class="row"
+        name="search-result"
+        style="display: none;"
+        data-bind="visible: searchResult().count > 0"
+      >
+        <h4>
+          Found <span data-bind="text: searchResult().count"> </span> records,
+          saved to <span data-bind="text: searchResult().location"></span>
+        </h4>
+      </div>
+    </div>
+    <script>
+      var indexVM = function() {
+        var self = this;
+        self.searchResult = ko.observable({});
+      };
+      var koVM = new indexVM();
+      $(function() {
+        ko.applyBindings(koVM);
+        $('[name="search-field"]').on('keypress', e => {
+          if (e.which === 13) {
+            console.log(
+              'searching for news with keyword ' +
+                encodeURIComponent($('[name="search-field"]').val())
+            );
+            $.get(
+              '/news/search?keyword=' +
+                encodeURIComponent($('[name="search-field"]').val())
+            ).done(data => {
+              console.log(data);
+              koVM.searchResult(data);
+            });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
