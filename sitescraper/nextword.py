@@ -9,7 +9,7 @@ def getwordgroup(sentence, searchword, maxright=0, expectstring=False):
         print("Found {" + searchword + "} at position " + str(indexofword + 1))
         if (indexofword + maxright) >= len(words):
             print(
-                "specified right limit exceed length, can use upto " + str(len(words) - words.index(searchword) - 1) + " word(s)")
+                "specified right limit exceed length, can use additional " + str(len(words) - words.index(searchword) - 1) + " word(s)")
             searchresult = [words[ind]
                             for ind in list(range(indexofword, len(words)))]
         else:
@@ -30,3 +30,4 @@ getwordgroup(text, "sample", 10)
 getwordgroup(text, "is", 4, True)
 getwordgroup(text, "a", 2)
 getwordgroup(text, "is", 2)
+getwordgroup(text, "text", 2)
