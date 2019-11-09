@@ -1,0 +1,3 @@
+pandas==0.25.3
+newspaper3k==0.2.8
+newspaper==0.1.0.7

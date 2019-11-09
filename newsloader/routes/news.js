@@ -20,24 +20,28 @@ router.get('/search', function(req, res, next) {
   var searchResult = {keyword: req.query.keyword};
   var timestamp = dateFormat(new Date(), 'yyyymmddHHMMssL');
   news.v2.everything(
-    {q: req.query.keyword, pageSize: 100, sortBy: 'relevancy'},
+    {
+      q: decodeURIComponent(req.query.keyword),
+      pageSize: 100,
+      sortBy: 'relevancy'
+    },
     (err, resp) => {
       if (err) {
         searchResult['count'] = 0;
         res.send(searchResult);
       } else {
-        console.log('writing to file');
-        var filePath =
+        var dumpFilePath =
           'C:\\Users\\Pratim\\Desktop\\dump\\' +
           timestamp +
           '-' +
           req.query.keyword +
           '.json';
-        fs.writeFile(filePath, JSON.stringify(resp), () => {
+        console.log('writing to file');
+        fs.writeFile(dumpFilePath, JSON.stringify(resp), 'utf8', () => {
           console.log('written to file');
           searchResult['count'] = resp.articles.length;
           searchResult['data'] = resp;
-          searchResult['file'] = filePath;
+          searchResult['file'] = dumpFilePath;
           res.send(searchResult);
         });
       }
