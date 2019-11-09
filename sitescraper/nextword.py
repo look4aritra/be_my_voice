@@ -93,3 +93,6 @@ def getwordgroupby(sentence, searchstring, maxright=0, expectstring=True):
 
 # getwordgroupby(text, "is a", 2)
 # getwordgroupby(text, "a sample", -2)
+
+getwordgroupby(text, "a sample text", -2)
+getwordgroupby(text, "this is a", 2)
