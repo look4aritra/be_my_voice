@@ -25,7 +25,7 @@ def getwordgroup(sentence, searchword, maxright=0, expectstring=False):
                     for ind in list(
                         range(indexofword, indexofword + maxright + 1))]
         else:
-            if (indexofword + maxright) < 0:
+            if (indexofword + maxright) <= 0:
                 print(
                     "specified left limit is below zero, can use additional " +
                     str(words.index(searchword)) + " word(s)")
