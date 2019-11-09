@@ -4,8 +4,6 @@ import pandas as pd
 
 from newspaper import Article
 
-processed = []
-
 
 def processarticle(url):
     try:
@@ -19,6 +17,7 @@ def processarticle(url):
 
 
 for file in glob.glob("C:\\Users\\Pratim\\Desktop\\dump\\*.json"):
+    processed = []
     print("Processing " + file)
     with open(file, encoding="utf8") as jsonFile:
         try:
