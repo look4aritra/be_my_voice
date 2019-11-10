@@ -11,7 +11,7 @@ def list2string(data):
     return out
 
 
-def get_word_group(sentence, search_word, max_right=0, expect_string=False):
+def get_wordgroup(sentence, search_word, max_right=0, expect_string=False):
     words = sentence.split(" ")
     # print(words)
     search_result = []
@@ -32,20 +32,20 @@ def get_word_group(sentence, search_word, max_right=0, expect_string=False):
     return search_result
 
 
-def get_word_group_by(sentence, search_string, max_right=0, expect_string=True):
+def get_wordgroup_by(sentence, search_string, max_right=0, expect_string=True):
     search_words = search_string.split(" ")
     # print(search_words)
     search_result = ""
     if len(search_words) <= 1:
         # print("performing standard search")
-        search_result = get_word_group(
+        search_result = get_wordgroup(
             sentence, search_string, max_right, True)
     else:
         # print("search string has multiple word")
         search_result = list2string(search_words[:-1]) + " " + \
-            get_word_group(sentence, search_words[-1], max_right, True) \
+            get_wordgroup(sentence, search_words[-1], max_right, True) \
             if max_right > 0 else \
-            get_word_group(sentence, search_words[0], max_right, True) \
+            get_wordgroup(sentence, search_words[0], max_right, True) \
             + " " + list2string(search_words[1:])
     if not expect_string:
         search_result = search_result.split(" ")
@@ -53,26 +53,26 @@ def get_word_group_by(sentence, search_string, max_right=0, expect_string=True):
     return search_result
 
 
-# get_word_group("this is a sample text", "this", 2, True)
-# get_word_group("this is a sample text", "sample", 10)
-# get_word_group("this is a sample text", "is", 4, True)
-# get_word_group("this is a sample text", "a", 2)
-# get_word_group("this is a sample text", "is", 2)
-# get_word_group("this is a sample text", "text", 2)
+# get_wordgroup("this is a sample text", "this", 2, True)
+# get_wordgroup("this is a sample text", "sample", 10)
+# get_wordgroup("this is a sample text", "is", 4, True)
+# get_wordgroup("this is a sample text", "a", 2)
+# get_wordgroup("this is a sample text", "is", 2)
+# get_wordgroup("this is a sample text", "text", 2)
 
-# get_word_group("this is a sample text", "this", -2)
-# get_word_group("this is a sample text", "text", -2)
-# get_word_group("this is a sample text", "sample", -20)
+# get_wordgroup("this is a sample text", "this", -2)
+# get_wordgroup("this is a sample text", "text", -2)
+# get_wordgroup("this is a sample text", "sample", -20)
 
-# get_word_group_by("this is a sample text", "is a", 2)
-# get_word_group_by("this is a sample text", "is a", 20)
-# get_word_group_by("this is a sample text", "text", 2)
+# get_wordgroup_by("this is a sample text", "is a", 2)
+# get_wordgroup_by("this is a sample text", "is a", 20)
+# get_wordgroup_by("this is a sample text", "text", 2)
 
-# get_word_group_by("this is a sample text", "a", 2)
-# get_word_group_by("this is a sample text", "a", -2)
+# get_wordgroup_by("this is a sample text", "a", 2)
+# get_wordgroup_by("this is a sample text", "a", -2)
 
-# get_word_group_by("this is a sample text", "is a", 2)
-# get_word_group_by("this is a sample text", "a sample", -2)
+# get_wordgroup_by("this is a sample text", "is a", 2)
+# get_wordgroup_by("this is a sample text", "a sample", -2)
 
-# get_word_group_by("this is a sample text", "a sample text", -2)
-# get_word_group_by("this is a sample text", "this is a", 2)
+# get_wordgroup_by("this is a sample text", "a sample text", -2)
+# get_wordgroup_by("this is a sample text", "this is a", 2)
