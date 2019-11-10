@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import json
 import glob
+import json
 import pandas as pd
 import sys
 
@@ -9,12 +9,10 @@ from contextlib import suppress
 from newsapi import NewsApiClient
 from newspaper import Article
 
+from utilities import print_dataframe
+
+
 newsapi_key = '38b178162f2e497cb564c6a6dafc6c9a'
-
-
-def print_dataframe(data):
-    for row in data.itertuples(index=False):
-        print(row)
 
 
 def process_article(url):

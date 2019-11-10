@@ -1,14 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from contextlib import suppress
-
-
-def list2string(data):
-    out = ""
-    with suppress(Exception):
-        out = " ".join(map(str, data))
-    # print(out)
-    return out
+from utilities import list2string
 
 
 def get_wordgroup(sentence, search_word, max_right=0, expect_string=False):
