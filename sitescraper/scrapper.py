@@ -48,12 +48,16 @@ if sys.argv[1] == "local":
                 print("unable to process "+file)
 
 else:
-    print("searching for " + query)
+    print("searching for " + sys.argv[3])
     api = NewsApiClient(api_key=apikey)
-    newsjson = api.get_everything(q=query, page_size=100, sort_by='relevancy')
+    newsjson = api.get_everything(
+        q=sys.argv[3],
+        page_size=int(sys.argv[2]), sort_by='relevancy')
     # print(newsjson)
     try:
         df = processurls(newsjson)
     except:
         print("unable to process query")
-print(df)
+
+for row in df.itertuples(index=False):
+    print(row)
