@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "analyzer"
+		},
+		{
+			"path": "newsloader-ui"
+		}
+	],
+  "settings": {}
+}
