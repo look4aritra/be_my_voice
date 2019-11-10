@@ -30,8 +30,8 @@ def sanitize(text):
     # remove any lingering tags
     with suppress(Exception):
         sanitized = tag_re.sub('', text)
-    # remove eol and eol whitespace
-    sanitized = sanitized.rstrip()
+    # remove eol and eol whitespace, including multiple consecutive ones
+    sanitized = " ".join(sanitized.rstrip().split())
     print(sanitized)
     return sanitized
 
@@ -40,3 +40,4 @@ def sanitize(text):
 # sanitize("hello")
 # sanitize("<cust>hello</cust>")
 # sanitize("<html>hello</html> all")
+# sanitize("<html>hello</html> \r\r     \nall")
