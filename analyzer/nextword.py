@@ -1,98 +1,78 @@
-text = "this is a sample text"
+# -*- coding: utf-8 -*-
+
+from contextlib import suppress
 
 
 def list2string(data):
-    return " ".join(map(str, data))
+    out = ""
+    with suppress(Exception):
+        out = " ".join(map(str, data))
+    # print(out)
+    return out
 
 
-def getwordgroup(sentence, searchword, maxright=0, expectstring=False):
+def get_word_group(sentence, search_word, max_right=0, expect_string=False):
     words = sentence.split(" ")
-    searchresult = []
-    if searchword in words:
-        indexofword = words.index(searchword)
-        print("Found {" + searchword + "} at position " + str(indexofword + 1))
-        if maxright > 0:
-            if (indexofword + maxright) >= len(words):
-                print("specified right limit exceed length, can use additional " +
-                      str(len(words) - words.index(searchword) - 1) + " word(s)")
-                searchresult = [words[ind]
-                                for ind in list(range(indexofword, len(words)))]
-            else:
-                print("fetching " + str(maxright) +
-                      " word(s) right of position " + str(indexofword+1))
-                searchresult = [
-                    words[ind]
-                    for ind in list(
-                        range(indexofword, indexofword + maxright + 1))]
-        else:
-            if (indexofword + maxright) <= 0:
-                print(
-                    "specified left limit is below zero, can use additional " +
-                    str(words.index(searchword)) + " word(s)")
-                searchresult = [words[ind]
-                                for ind in list(range(0, indexofword + 1))]
-            else:
-                print("fetching " + str(maxright) +
-                      " word(s) before position " + str(indexofword + 1))
-                searchresult = [
-                    words[ind]
-                    for ind in list(
-                        range(indexofword + maxright, indexofword + 1))]
+    # print(words)
+    search_result = []
+    if search_word in words:
+        index_of_word = words.index(search_word)
+        print("Found {" + search_word + "} at position "
+              + str(index_of_word + 1))
+        search_result = words[index_of_word:len(words)] \
+            if (index_of_word + max_right) >= len(words) \
+            else words[index_of_word:(index_of_word + max_right + 1)] \
+            if max_right > 0 else \
+            words[0: index_of_word + 1] \
+            if (index_of_word + max_right) <= 0 \
+            else words[(index_of_word + max_right):index_of_word + 1]
+    if expect_string:
+        search_result = list2string(search_result)
+    # print(search_result)
+    return search_result
+
+
+def get_word_group_by(sentence, search_string, max_right=0, expect_string=True):
+    search_words = search_string.split(" ")
+    # print(search_words)
+    search_result = ""
+    if len(search_words) <= 1:
+        # print("performing standard search")
+        search_result = get_word_group(
+            sentence, search_string, max_right, True)
     else:
-        print("No matching word found")
-    if expectstring:
-        searchresult = list2string(searchresult)
-    print(searchresult)
-    return searchresult
+        # print("search string has multiple word")
+        search_result = list2string(search_words[:-1]) + " " + \
+            get_word_group(sentence, search_words[-1], max_right, True) \
+            if max_right > 0 else \
+            get_word_group(sentence, search_words[0], max_right, True) \
+            + " " + list2string(search_words[1:])
+    if not expect_string:
+        search_result = search_result.split(" ")
+    # print(search_result)
+    return search_result
 
 
-def getwordgroupby(sentence, searchstring, maxright=0, expectstring=True):
-    searchwords = searchstring.split(" ")
-    # print(searchwords)
-    searchresult = ""
-    if len(searchwords) <= 1:
-        print("performing standard search")
-        searchresult = getwordgroup(
-            sentence, searchstring, maxright, True)
-    else:
-        print("search string has multiple word")
-        if maxright > 0:
-            print("using last word to search")
-            searchresult = getwordgroup(
-                sentence, searchwords[-1], maxright, True)
-            # print(list2string(searchwords[:-1]))
-            searchresult = list2string(searchwords[:-1]) + " " + searchresult
-        else:
-            print("using first word to search")
-            searchresult = getwordgroup(
-                sentence, searchwords[0], maxright, True)
-            searchresult = searchresult + " " + list2string(searchwords[1:])
-    if not expectstring:
-        searchresult = searchresult.split(" ")
-    print(searchresult)
-    return searchresult
+# get_word_group("this is a sample text", "this", 2, True)
+# get_word_group("this is a sample text", "sample", 10)
+# get_word_group("this is a sample text", "is", 4, True)
+# get_word_group("this is a sample text", "a", 2)
+# get_word_group("this is a sample text", "is", 2)
+# get_word_group("this is a sample text", "text", 2)
 
+# get_word_group("this is a sample text", "this", -2)
+# get_word_group("this is a sample text", "text", -2)
+# get_word_group("this is a sample text", "sample", -20)
 
-# getwordgroup(text, "this", 2, True)
-# getwordgroup(text, "sample", 10)
-# getwordgroup(text, "is", 4, True)
-# getwordgroup(text, "a", 2)
-# getwordgroup(text, "is", 2)
-# getwordgroup(text, "text", 2)
+# get_word_group_by("this is a sample text", "is a", 2)
+# get_word_group_by("this is a sample text", "is a", 20)
+# get_word_group_by("this is a sample text", "text", 2)
 
-# getwordgroupby(text, "is a", 2)
-# getwordgroupby(text, "is a", 20)
-# getwordgroupby(text, "text", 2)
+# get_word_group_by("this is a sample text", "a", 2)
+# get_word_group_by("this is a sample text", "a", -2)
 
-# getwordgroup(text, "this", -2)
-# getwordgroup(text, "text", -2)
-# getwordgroup(text, "sample", -20)
+# get_word_group_by("this is a sample text", "is a", 2)
+# get_word_group_by("this is a sample text", "a sample", -2)
 
-# getwordgroupby(text, "a", 2)
-# getwordgroupby(text, "a", -2)
-
-# getwordgroupby(text, "is a", 2)
-# getwordgroupby(text, "a sample", -2)
-
-getwordgroupby(text, "a sample text", -2)
-getwordgroupby(text, "this is a", 2)
+# get_word_group_by("this is a sample text", "a sample text", -2)
+# get_word_group_by("this is a sample text", "this is a", 2)
