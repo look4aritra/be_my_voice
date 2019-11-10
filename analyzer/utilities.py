@@ -34,10 +34,3 @@ def sanitize(text):
     sanitized = " ".join(sanitized.rstrip().split())
     print(sanitized)
     return sanitized
-
-
-# sanitize("")
-# sanitize("hello")
-# sanitize("<cust>hello</cust>")
-# sanitize("<html>hello</html> all")
-# sanitize("<html>hello</html> \r\r     \nall")
