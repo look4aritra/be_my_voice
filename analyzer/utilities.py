@@ -32,13 +32,13 @@ def sanitize(text):
         sanitized = tag_re.sub('', text)
     # remove eol and eol whitespace, including multiple consecutive ones
     sanitized = " ".join(sanitized.rstrip().split())
-    print(sanitized)
+    # print(sanitized)
     return sanitized
 
-# list2string(["hey", "there"])
+# print(list2string(["hey", "there"]))
 
-# sanitize("")
-# sanitize("hello")
-# sanitize("<cust>hello</cust>")
-# sanitize("<html>hello</html> all")
-# sanitize("<html>hello</html> \r\r   \nall")
+# print(sanitize(""))
+# print(sanitize("hello"))
+# print(sanitize("<cust>hello</cust>"))
+# print(sanitize("<html>hello</html> all"))
+# print(sanitize("<html>hello</html> \r\r   \nall"))

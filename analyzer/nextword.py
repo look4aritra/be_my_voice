@@ -45,26 +45,26 @@ def get_wordgroup_by(sentence, search_string, max_right=0, expect_string=True):
     return search_result
 
 
-# get_wordgroup("this is a sample text", "this", 2, True)
-# get_wordgroup("this is a sample text", "sample", 10)
-# get_wordgroup("this is a sample text", "is", 4, True)
-# get_wordgroup("this is a sample text", "a", 2)
-# get_wordgroup("this is a sample text", "is", 2)
-# get_wordgroup("this is a sample text", "text", 2)
+# print(get_wordgroup("this is a sample text", "this", 2, True))
+# print(get_wordgroup("this is a sample text", "sample", 10))
+# print(get_wordgroup("this is a sample text", "is", 4, True))
+# print(get_wordgroup("this is a sample text", "a", 2))
+# print(get_wordgroup("this is a sample text", "is", 2))
+# print(get_wordgroup("this is a sample text", "text", 2))
 
-# get_wordgroup("this is a sample text", "this", -2)
-# get_wordgroup("this is a sample text", "text", -2)
-# get_wordgroup("this is a sample text", "sample", -20)
+# print(get_wordgroup("this is a sample text", "this", -2))
+# print(get_wordgroup("this is a sample text", "text", -2))
+# print(get_wordgroup("this is a sample text", "sample", -20))
 
-# get_wordgroup_by("this is a sample text", "is a", 2)
-# get_wordgroup_by("this is a sample text", "is a", 20)
-# get_wordgroup_by("this is a sample text", "text", 2)
+# print(get_wordgroup_by("this is a sample text", "is a", 2))
+# print(get_wordgroup_by("this is a sample text", "is a", 20))
+# print(get_wordgroup_by("this is a sample text", "text", 2))
 
-# get_wordgroup_by("this is a sample text", "a", 2)
-# get_wordgroup_by("this is a sample text", "a", -2)
+# print(get_wordgroup_by("this is a sample text", "a", 2))
+# print(get_wordgroup_by("this is a sample text", "a", -2))
 
-# get_wordgroup_by("this is a sample text", "is a", 2)
-# get_wordgroup_by("this is a sample text", "a sample", -2)
+# print(get_wordgroup_by("this is a sample text", "is a", 2))
+# print(get_wordgroup_by("this is a sample text", "a sample", -2))
 
-# get_wordgroup_by("this is a sample text", "a sample text", -2)
-# get_wordgroup_by("this is a sample text", "this is a", 2)
+# print(get_wordgroup_by("this is a sample text", "a sample text", -2))
+# print(get_wordgroup_by("this is a sample text", "this is a", 2))
