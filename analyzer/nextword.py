@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-
+#%%
 from utilities import list2string
 
-
+#%%
 def get_wordgroup(sentence, search_word, max_right=0, expect_string=False):
     words = sentence.split(" ")
     # print(words)
@@ -23,7 +23,7 @@ def get_wordgroup(sentence, search_word, max_right=0, expect_string=False):
     # print(search_result)
     return search_result
 
-
+#%%
 def get_wordgroup_by(sentence, search_string, max_right=0, expect_string=True):
     search_words = search_string.split(" ")
     # print(search_words)
@@ -44,7 +44,7 @@ def get_wordgroup_by(sentence, search_string, max_right=0, expect_string=True):
     # print(search_result)
     return search_result
 
-
+#%%
 # print(get_wordgroup("this is a sample text", "this", 2, True))
 # print(get_wordgroup("this is a sample text", "sample", 10))
 # print(get_wordgroup("this is a sample text", "is", 4, True))
