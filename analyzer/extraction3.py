@@ -5,40 +5,38 @@ Original file is located at
 
 """
 # %%
-import re
-import os
-import spacy
-from newspaper import Article
-from newsapi import NewsApiClient
-import newspaper
-import sys
 import glob
 import json
-from gensim.scripts.glove2word2vec import glove2word2vec
+import os
+import re
+import sys
+from collections import Counter
+
+import en_core_web_sm
+import networkx as nx
+import nltk
+import numpy as np
+import pandas as pd
+import spacy
 # Gensim contains word2vec models and processing tools
 from gensim.models import KeyedVectors
+from gensim.scripts.glove2word2vec import glove2word2vec
 from gensim.test.utils import datapath, get_tmpfile
-import en_core_web_sm
-from collections import Counter
-from spacy import displacy
-import networkx as nx
-from sklearn.metrics.pairwise import cosine_similarity
 from nltk.corpus import stopwords
 from nltk.tokenize import sent_tokenize
-import nltk
-import pandas as pd
-import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
+from spacy import displacy
 
-from utilities import remove_stopwords
 from nextword import get_wordgroup, get_wordgroup_by
 from scrapper import process_urls, trigger_remote
+from utilities import remove_stopwords, sanitize
 
-#%%
+# %%
 project_path = os.getcwd() + os.path.sep
 # %cd  "/content/drive/My Drive/DLCP/Fake News Challenge/"
 print("project directory set to " + project_path)
 
-#%%
+# %%
 # one time execution
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -46,14 +44,14 @@ nltk.download('brown')  # download the corous
 nltk.download('averaged_perceptron_tagger')  # Download the tagger
 print("downloaded nltk modules")
 
-#%%
+# %%
 stop_words = stopwords.words('english')
 spacy_nlp = spacy.load('en_core_web_sm')
 nlp = en_core_web_sm.load()
 
 print("configured stopwords and spacy")
 
-#%%
+# %%
 word_embeddings = {}
 with open(project_path + 'glove.6B.300d.txt', encoding='utf-8') as dFile:
     for line in dFile:
@@ -66,16 +64,19 @@ glove_file = datapath(project_path + 'glove.6B.300d.txt')
 tmp_file = get_tmpfile(project_path + 'word2vec.glove.6B.300d.txt')
 
 # Converting the GloVe file into a Word2Vec file
-glove2word2vec(glove_file, tmp_file)
+if not os.path.exists(tmp_file):
+    glove2word2vec(glove_file, tmp_file)
+
 model = KeyedVectors.load_word2vec_format(tmp_file)
 print("glove setup complete")
 
-#%%
+
+# %%
 def process(art):
     print("processing " + str(art))
     sentences = []
     for s in getattr(art, 'fullarticle'):
-        sentences.append(sent_tokenize(s))
+        sentences.append(sent_tokenize(sanitize(s)))
 
     sentences = [y for x in sentences for y in x]  # flatten list
 
@@ -84,13 +85,15 @@ def process(art):
     # make alphabets lowercase
     clean_sentences = [s.lower() for s in clean_sentences]
 
-    clean_sentences = [remove_stopwords(r.split(), stop_words) for r in clean_sentences]
+    clean_sentences = [remove_stopwords(
+        r.split(), stop_words) for r in clean_sentences]
 
     print("generating vectors")
     sentence_vectors = []
     for i in clean_sentences:
         if len(i) != 0:
-            v = sum([word_embeddings.get(w, np.zeros((300,))) for w in i.split()])/(len(i.split())+0.001)
+            v = sum([word_embeddings.get(w, np.zeros((300,)))
+                     for w in i.split()])/(len(i.split())+0.001)
         else:
             v = np.zeros((300,))
         sentence_vectors.append(v)
@@ -106,7 +109,8 @@ def process(art):
     nx_graph = nx.from_numpy_array(sim_mat)
     scores = nx.pagerank(nx_graph)
 
-    ranked_sentences = sorted(((scores[i], s) for i, s in enumerate(sentences)), reverse=True)
+    ranked_sentences = sorted(
+        ((scores[i], s) for i, s in enumerate(sentences)), reverse=True)
 
     article_length = len(ranked_sentences)
     print("Article length: " + str(article_length))
@@ -192,7 +196,8 @@ def process(art):
 
     return
 
-#%%
+
+# %%
 df = trigger_remote("rhinos and poaching")
 print(df)
 
