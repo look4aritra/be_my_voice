@@ -31,23 +31,25 @@ def sanitize(text):
     # remove any lingering tags
     with suppress(Exception):
         sanitized = tag_re.sub('', text)
+    with suppress(Exception):
+        sanitized = sanitized.replace('\\', ' ').replace('/', ' ')
     # remove eol and eol whitespace, including multiple consecutive ones
-    sanitized = " ".join(sanitized.rstrip().split())
+    sanitized = ' '.join(sanitized.rstrip().split())
     # print(sanitized)
     return sanitized
 
 
 # %%
 def remove_stopwords(sen, stop_words):
-    sen_new = " ".join([i for i in sen if i not in stop_words])
+    sen_new = ' '.join([i for i in sen if i not in stop_words])
     # print(sen_new)
     return sen_new
 
 # %%
-# print(list2string(["hey", "there"]))
+# print(list2string(['hey', 'there']))
 
-# print(sanitize(""))
-# print(sanitize("hello"))
-# print(sanitize("<cust>hello</cust>"))
-# print(sanitize("<html>hello</html> all"))
-# print(sanitize("<html>hello</html> \r\r   \nall"))
+# print(sanitize(''))
+# print(sanitize('hello'))
+# print(sanitize('<cust>hello</cust>'))
+# print(sanitize('<html>hello</html> all'))
+# print(sanitize('<html>hello</html> \r\r   \nall'))
