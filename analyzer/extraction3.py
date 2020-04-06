@@ -5,6 +5,7 @@ Original file is located at
 
 """
 # %%
+import csv
 import glob
 import json
 import mmap
@@ -51,6 +52,9 @@ spacy_nlp = spacy.load('en_core_web_sm')
 nlp = en_core_web_sm.load()
 print('configured stopwords and spacy')
 
+# %%
+pd.read_table(project_path + 'glove.6B.300d.txt', sep=" ", index_col=0,
+              header=None, quoting=csv.QUOTE_NONE)
 
 # %%
 word_embeddings = {}
@@ -61,7 +65,7 @@ with open(project_path + 'glove.6B.300d.txt', encoding='utf-8') as dFile:
         word_embeddings[values[0]] = np.asarray(
             values[1:], dtype='float32')
 """
-
+"""
 # load glove dict into memory instead of processing from disk
 with open(project_path + 'glove.6B.300d.txt', encoding='utf-8') as dFile:
     # File is open read-only
@@ -71,7 +75,7 @@ with open(project_path + 'glove.6B.300d.txt', encoding='utf-8') as dFile:
         values = data.split()
         word_embeddings[values[0]] = np.asarray(values[1:], dtype='float32')
         data = mFile.readline()
-
+"""
 
 # This is a GloVe model
 glove_file = datapath(project_path + 'glove.6B.300d.txt')
@@ -90,9 +94,13 @@ def process(art):
     print('processing ' + str(getattr(searchData, 'fullarticle')))
     sentences = []
     for s in getattr(art, 'fullarticle'):
-        sentences.append(sent_tokenize(sanitize(s)))
+        sentences.append(sent_tokenize(s))
 
-    sentences = [y for x in sentences for y in x]  # flatten list
+    sentences = [y for x in sentences for y in x]
+
+    print(sentences)
+
+    # flatten list
     clean_sentences = pd.Series(sentences).str.replace('[^a-zA-Z]', ' ')
 
     # make alphabets lowercase

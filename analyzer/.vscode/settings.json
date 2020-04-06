@@ -1,8 +1,13 @@
 {
+  "css_peek.enable": false,
   "python.pythonPath": "venv\\Scripts\\python.exe",
   "python.linting.flake8Enabled": false,
   "python.linting.pylintEnabled": false,
   "python.linting.enabled": false,
   "python.formatting.provider": "autopep8",
-  "python.formatting.autopep8Args": ["--max-line-length", "80", "--experimental"]
+  "python.formatting.autopep8Args": [
+    "--max-line-length",
+    "80",
+    "--experimental"
+  ]
 }
