@@ -1,7 +1,7 @@
 nltk==3.4.5
 networkx==2.4
 gensim==3.8.1
-numpy==1.18.0
+numpy==1.22.0
 en_core_web_sm==2.2.5
 newspaper3k==0.2.8
 spacy==2.2.3
